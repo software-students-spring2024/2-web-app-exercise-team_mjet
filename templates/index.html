@@ -1,29 +1,69 @@
 {% extends 'base.html' %}
 
 {% block container %}
+    <h2>Listings</h2>
 
-    <h2>Posts</h2>
-    <section class="posts">
+    <div class="listings">
+        {% for doc in docs %}
+        <div class="listing">
+            <div class="details">
+                <b>{doc.title}</b>
+                <p>{doc.description}</p>
+            </div>
+        </div>
+        {% endfor %}
 
-        <article class="post new-post">
-            something
-        </article>
+        <!--sample listings-->
+        <div class="listing">
+            <div class="listing-image">
+                <img src="https://i.imgur.com/FLqFIXz.jpeg" referrerpolicy="no-referrer" alt="desk chair">
+            </div>
+            <div class="details">
+                <b>Office Chair</b>
+                <p>Description. Lorem ipsum dolor sit amet.</p>
+            </div>
+        </div>
 
-        
-        <article class="post">
-            <nav class="controls">
-                Edit | Delete
-            </nav>
-            <p class="author">
-                stuff
-            </p>
-            <p class="message">
-                message
-            </p>
-            </p>
-        </article>
-        
+        <div class="listing">
+            <div class="listing-image">
+                <img src="https://i.imgur.com/Ydl8SkF.jpeg" referrerpolicy="no-referrer" alt="desk chair">
+            </div>
+            <div class="details">
+                <b>N64 Controller</b>
+                <p>Description. Lorem ipsum dolor sit amet.</p>
+            </div>
+        </div>
 
-    </section>
+        <div class="listing">
+            <div class="listing-image">
+                <img src="https://i.imgur.com/P5XqVeu.jpeg" referrerpolicy="no-referrer" alt="desk chair">
+            </div>
+            <div class="details">
+                <b>Night Stand</b>
+                <p>Description. Lorem ipsum dolor sit amet.</p>
+            </div>
+        </div>
+
+        <div class="listing">
+            <div class="listing-image">
+                <img src="https://i.imgur.com/oVQTzlk.jpeg" referrerpolicy="no-referrer" alt="desk chair">
+            </div>
+            <div class="details">
+                <b>Office Chair</b>
+                <p>Description. Lorem ipsum dolor sit amet.</p>
+            </div>
+        </div>
+
+        <div class="listing">
+            <div class="listing-image">
+                <img src="https://i.imgur.com/rJU40d2.jpeg" referrerpolicy="no-referrer" alt="desk chair">
+            </div>
+            <div class="details">
+                <b>Acoustic Guitar</b>
+                <p>Description. Lorem ipsum dolor sit amet.</p>
+            </div>
+        </div>
+
+    </div>
 
 {% endblock %}

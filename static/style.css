@@ -51,3 +51,33 @@
   footer {
     margin-bottom: 5px;
   }
+
+  .listings {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+  }
+
+  .listing  {
+    border: 1px solid black;
+    position: relative;
+  }
+
+  .listing-image {
+    position: relative;
+    height: 80%;
+    overflow: hidden;
+  }
+
+  .listing img {
+    width: 100%;
+    height: auto;
+  }
+
+  .details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 10px;
+  }

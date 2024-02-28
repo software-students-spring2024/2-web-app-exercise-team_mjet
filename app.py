@@ -61,6 +61,7 @@ def user_loader(username):
     user.id = username
     return user
 
+
 @login_manager.request_loader
 def request_loader(request):
     username = request.form.get('username')
@@ -78,7 +79,8 @@ def home():
     """
     Route for the home page
     """
-    return render_template("index.html")  # render the hone template
+    docs = db.listings.find({}).sort("created_at", -1) # retrieve all listings
+    return render_template("index.html", docs=docs)  # render the hone template
 
 
 # route to accept the form submission to delete an existing post
@@ -99,6 +101,7 @@ def sign_up():
             db.users.insert_one(new_user)
             return redirect(url_for("log_in"))
     return render_template("signup.html")
+
 
 @app.route("/login", methods=["POST", "GET"])
 def log_in():
@@ -124,19 +127,23 @@ def log_in():
 
     return render_template("login.html")
 
+
 @app.route('/protected')
 @flask_login.login_required
 def protected():
     return render_template('protected.html') 
+
 
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
     return redirect(url_for('log_in'))
 
+
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     return redirect(url_for('log_in'))
+
 
 # run the app
 if __name__ == "__main__":
