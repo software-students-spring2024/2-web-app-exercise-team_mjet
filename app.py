@@ -139,6 +139,14 @@ def logout():
     flask_login.logout_user()
     return redirect(url_for('log_in'))
 
+@app.route("/item/<item_id>")
+def item(item_id):
+    try:
+        founditem = db.items.find_one({'_id': ObjectId(item_id)})
+        return render_template("item.html", founditem = founditem)
+    except:
+        return redirect(url_for('home')) #redirect to an error page ideally
+
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
