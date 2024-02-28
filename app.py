@@ -16,6 +16,8 @@ load_dotenv()  # take environment variables from .env.
 
 # instantiate the app
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY")
+
 bcrypt = Bcrypt(app) 
 #these 2 are for flask login
 login_manager = LoginManager()
@@ -40,15 +42,35 @@ except Exception as e:
 # if os.getenv("FLASK_ENV", "development") == "development":
 #     # turn on debugging, if in development
 #     app.debug = True  # debug mnode
+    
 
+#this is the class user which will be stored in a session
+#i think the flask_login.Usermixin handles all of the methods needed
 class User(flask_login.UserMixin):
     pass
 
 
 #this callback is used to reload the user object from the user ID stored in the session.It should take the str ID of a user, and return the corresponding user object
 @login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id)
+def user_loader(username):
+    founduser = db.users.find_one({"username": username})
+    if not founduser: 
+        return
+
+    user = User()
+    user.id = username
+    return user
+
+@login_manager.request_loader
+def request_loader(request):
+    username = request.form.get('username')
+    founduser = db.users.find_one({"username": username})
+    if not founduser: 
+        return
+
+    user = User()
+    user.id = username
+    return user
 
 
 @app.route("/")
@@ -86,17 +108,35 @@ def log_in():
     if request.method == "POST":
         username = request.form["fusername"]
         password = request.form["fpassword"]
-        user = db.users.find_one({"username": username})
-        if user:
-            print("do something")
-        else:
+        found_user = db.users.find_one({"username": username})
+        print("here the found user")
+        print(found_user)
+        if not found_user:
             return render_template('login.html', error="User not found.")
+        else:
+            is_valid = bcrypt.check_password_hash(found_user['password'], password)
+            if not is_valid:
+                return render_template('login.html', error="Username or password is invalid.") 
+            user = User()
+            user.id = username
+            flask_login.login_user(user)
+            return redirect(url_for('protected'))
+
     return render_template("login.html")
 
+@app.route('/protected')
+@flask_login.login_required
+def protected():
+    return render_template('protected.html') 
 
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return redirect(url_for('log_in'))
 
-
-
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    return redirect(url_for('log_in'))
 
 # run the app
 if __name__ == "__main__":
