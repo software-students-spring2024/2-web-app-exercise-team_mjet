@@ -1,0 +1,17 @@
+{% extends 'base.html' %} 
+
+{% block container %}
+<h2>Sign Up</h2>
+<form method="POST" action="{{ url_for('sign_up')}}">
+    <label for="fusername">Username: </label>
+    <input type="text" id="fusername" name="fusername" placeholder="Username"/>
+    <br />
+    <label for="fusername">Password: </label>
+    <input type="text" id="fpassword" name="fpassword" placeholder="Enter a Password"/>
+    <br />
+    <input type="submit" value="Sign up" />
+</form>
+{% if error %}
+<p>{{error}}</p>
+{% endif %}
+{% endblock %}
