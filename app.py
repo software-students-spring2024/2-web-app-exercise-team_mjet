@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import datetime
 from flask import Flask, render_template, request, redirect, url_for
 
 # from markupsafe import escape
@@ -146,6 +147,23 @@ def item(item_id):
         return render_template("item.html", founditem = founditem)
     except:
         return redirect(url_for('home')) #redirect to an error page ideally
+
+#add item here
+@app.route("/add")
+def add():
+    #TODO make this an actual userid fetch
+    userid = "user placeholder"
+    return render_template("add.html", userid = userid)
+
+@app.route("/add/<user_id>", methods= ["GET", "POST"])
+def create_item(user_id):
+    name = request.form["itemname"]
+    desc = request.form["description"]
+    price = request.form["price"]
+    url = request.form["url"]
+    item = {"name": name,  "description" :desc, "user":user_id, "image_url":url, "price":price, "created_at": datetime.datetime.utcnow()}
+    db.items.insert_one(item)
+    return redirect(url_for('home'))
 
 
 @login_manager.unauthorized_handler
