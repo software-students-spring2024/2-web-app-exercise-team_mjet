@@ -176,6 +176,12 @@ def create_item(user_id):
     db.items.insert_one(item)
     return redirect(url_for('home'))
 
+#delete has no html but should be invoked later from the my listings page, pass the item id through
+@app.route("/delete/<item_id>")
+def delete(item_id):
+        db.items.delete_one({"_id": ObjectId(item_id)})
+        #TODO can redirect to the my listings page later
+        return redirect(url_for('home'))
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
