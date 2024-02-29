@@ -183,6 +183,22 @@ def delete(item_id):
         #TODO can redirect to the my listings page later
         return redirect(url_for('home'))
 
+@app.route("/edit/<item_id>")
+def edit(item_id):
+    founditem = db.items.find_one({'_id': ObjectId(item_id)})
+    return render_template("edit.html", founditem = founditem, item_id = item_id)
+
+@app.route("/update/<item_id>", methods= ["GET", "POST"])
+def update_item(item_id):
+    name = request.form["itemname"]
+    desc = request.form["description"]
+    price = request.form["price"]
+    url = request.form["url"]
+    item = {"name": name,  "description" :desc, "image_url":url, "price":price}
+    db.items.update_one({"_id": ObjectId(item_id)}, {"$set": item})
+    return redirect(url_for('home'))
+
+
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     return redirect(url_for('log_in'))
