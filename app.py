@@ -80,7 +80,18 @@ def home():
     """
     Route for the home page
     """
-    docs = db.listings.find({}).sort("created_at", -1) # retrieve all listings
+    sort_option = request.args.get('sort')
+
+    if sort_option == 'oldest':
+        docs_cursor = db.items.find({}).sort("created_at", 1)
+    elif sort_option == 'lowest':
+        docs_cursor = db.items.find({}).sort("price", 1)
+    elif sort_option == 'highest':
+        docs_cursor = db.items.find({}).sort("price", -1)
+    else:
+        docs_cursor = db.items.find({}).sort("created_at", -1)
+    
+    docs = list(docs_cursor)
     return render_template("index.html", docs=docs)  # render the hone template
 
 
