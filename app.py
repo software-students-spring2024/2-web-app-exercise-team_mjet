@@ -113,6 +113,8 @@ def sign_up():
             new_user = {'username': username, 'password': hashed_password, 'items': []}
             db.users.insert_one(new_user)
             return redirect(url_for("log_in"))
+    if flask_login.current_user.is_authenticated:
+        return redirect(url_for('home'))
     return render_template("signup.html")
 
 
@@ -125,8 +127,6 @@ def log_in():
         username = request.form["fusername"]
         password = request.form["fpassword"]
         found_user = db.users.find_one({"username": username})
-        print("here the found user")
-        print(found_user)
         if not found_user:
             return render_template('login.html', error="User not found.")
         else:
@@ -136,8 +136,9 @@ def log_in():
             user = User()
             user.id = username
             flask_login.login_user(user)
-            return redirect(url_for('protected'))
-
+            return redirect(url_for('home'))
+    if flask_login.current_user.is_authenticated:
+        return redirect(url_for('home'))
     return render_template("login.html")
 
 
@@ -153,6 +154,7 @@ def logout():
     return redirect(url_for('log_in'))
 
 @app.route("/item/<item_id>")
+@flask_login.login_required
 def item(item_id):
     try:
         founditem = db.items.find_one({'_id': ObjectId(item_id)})
@@ -162,6 +164,7 @@ def item(item_id):
 
 #add item here
 @app.route("/add")
+@flask_login.login_required
 def add():
     #TODO make this an actual userid fetch
     try:
@@ -172,6 +175,7 @@ def add():
         return redirect(url_for('home'))
 
 @app.route("/add/<user_id>", methods= ["GET", "POST"])
+@flask_login.login_required
 def create_item(user_id):
     name = request.form["itemname"]
     desc = request.form["description"]
@@ -183,17 +187,20 @@ def create_item(user_id):
 
 #delete has no html but should be invoked later from the my listings page, pass the item id through
 @app.route("/delete/<item_id>")
+@flask_login.login_required
 def delete(item_id):
         db.items.delete_one({"_id": ObjectId(item_id)})
         #TODO can redirect to the my listings page later
         return redirect(url_for('home'))
 
 @app.route("/edit/<item_id>")
+@flask_login.login_required
 def edit(item_id):
     founditem = db.items.find_one({'_id': ObjectId(item_id)})
     return render_template("edit.html", founditem = founditem, item_id = item_id)
 
 @app.route("/update/<item_id>", methods= ["GET", "POST"])
+@flask_login.login_required
 def update_item(item_id):
     name = request.form["itemname"]
     desc = request.form["description"]
@@ -205,6 +212,7 @@ def update_item(item_id):
 
 
 @app.route("/viewListings")
+@flask_login.login_required
 def view_listings():
     user_to_find = flask_login.current_user.id
     print(user_to_find)
