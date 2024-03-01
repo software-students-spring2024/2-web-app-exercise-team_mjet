@@ -198,33 +198,50 @@ footer {
 
 .listings {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1em;
 }
 
 .listing {
   border: 1px solid black;
   position: relative;
+  max-height: 500px;
+  box-sizing: border-box;
+  border-radius: 0.5em;
 }
 
 .listing-image {
   position: relative;
-  height: 80%;
+  height: 70%;
   overflow: hidden;
 }
 
 .listing img {
   width: 100%;
   height: auto;
+  border-radius: 0.5em;
 }
 
 .details {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
-  margin: 10px;
+  width: 85%;
+  margin: 0 7.5%;
+  height: 30%;
+  /*font-size: 0.7rem;*/
 }
+
+.details p {
+  width: auto;
+}
+
+.details-primary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .item-image {
   display: block;
   max-width: 600px;
@@ -232,6 +249,7 @@ footer {
   width: auto;
   height: auto;
 }
+
 .item img {
   object-fit: contain;
   width: 100%;

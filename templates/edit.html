@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block container %}
+<h1>Edit An Item</h1>
+<form method="POST" action="{{url_for('update_item', item_id = item_id)}}">
+  <input type="text" id="itemname" name="itemname" value="{{founditem.name}}" />
+  <br />
+  <textarea type="text" id="description" name="description">
+{{founditem.description}}
+</textarea
+  >
+  <br />
+  <input
+    type="number"
+    step="0.01"
+    id="price"
+    name="price"
+    value="{{founditem.price}}"
+  />
+  <br />
+  <input type="test" id="url" name="url" value="{{founditem.image_url}}" />
+  <input type="submit" value="Save" />
+</form>
+
+{% endblock %}

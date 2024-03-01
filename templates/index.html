@@ -1,69 +1,34 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block container %}
+<div id="search-results">
+  <div id="results">{{ docs|length }} Results</div>
+  <select name="sort" id="sort" onchange="dropdownRedirect()">
+    <option value="newest">Newest</option>
+    <option value="oldest">Oldest</option>
+    <option value="lowest">Lowest Price</option>
+    <option value="highest">Highest Price</option>
+  </select>
+</div>
 
-{% block container %}
-    <h2>Listings</h2>
-
-    <div class="listings">
-        {% for doc in docs %}
-        <div class="listing">
-            <div class="details">
-                <b>{doc.title}</b>
-                <p>{doc.description}</p>
-            </div>
-        </div>
-        {% endfor %}
-
-        <!--sample listings-->
-        <div class="listing">
-            <div class="listing-image">
-                <img src="https://i.imgur.com/FLqFIXz.jpeg" referrerpolicy="no-referrer" alt="desk chair">
-            </div>
-            <div class="details">
-                <b>Office Chair</b>
-                <p>Description. Lorem ipsum dolor sit amet.</p>
-            </div>
-        </div>
-
-        <div class="listing">
-            <div class="listing-image">
-                <img src="https://i.imgur.com/Ydl8SkF.jpeg" referrerpolicy="no-referrer" alt="desk chair">
-            </div>
-            <div class="details">
-                <b>N64 Controller</b>
-                <p>Description. Lorem ipsum dolor sit amet.</p>
-            </div>
-        </div>
-
-        <div class="listing">
-            <div class="listing-image">
-                <img src="https://i.imgur.com/P5XqVeu.jpeg" referrerpolicy="no-referrer" alt="desk chair">
-            </div>
-            <div class="details">
-                <b>Night Stand</b>
-                <p>Description. Lorem ipsum dolor sit amet.</p>
-            </div>
-        </div>
-
-        <div class="listing">
-            <div class="listing-image">
-                <img src="https://i.imgur.com/oVQTzlk.jpeg" referrerpolicy="no-referrer" alt="desk chair">
-            </div>
-            <div class="details">
-                <b>Office Chair</b>
-                <p>Description. Lorem ipsum dolor sit amet.</p>
-            </div>
-        </div>
-
-        <div class="listing">
-            <div class="listing-image">
-                <img src="https://i.imgur.com/rJU40d2.jpeg" referrerpolicy="no-referrer" alt="desk chair">
-            </div>
-            <div class="details">
-                <b>Acoustic Guitar</b>
-                <p>Description. Lorem ipsum dolor sit amet.</p>
-            </div>
-        </div>
-
+<div id="listings">
+  {% for doc in docs %}
+  <div class="listing">
+    <div class="listing-image">
+      <img
+        src="{{ doc.image_url }}"
+        alt="{{ doc.title }}"
+        referrerpolicy="no-referrer"
+      />
     </div>
-
+    <div class="details">
+      <div class="details-primary">
+        <a href="{{url_for('item', item_id = doc._id)}}"
+          ><b>{{ doc.name }}</b></a
+        >
+        <p>${{ doc.price }}</p>
+      </div>
+      <p>{{ doc.description }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}

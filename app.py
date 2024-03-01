@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import datetime
 from flask import Flask, render_template, request, redirect, url_for
 
 from flask import Flask, render_template
@@ -14,6 +15,7 @@ from dotenv import load_dotenv
 import flask_login #this will be used for user authentication
 from flask_bcrypt import Bcrypt 
 from flask_login import LoginManager
+from bson.objectid import ObjectId #used to search db using objec ids
 # load credentials and configuration options from .env file
 # if you do not yet have a file named .env, make one based on the template in env.example
 load_dotenv()  # take environment variables from .env.
@@ -62,7 +64,7 @@ def user_loader(username):
         return
 
     user = User()
-    user.id = username
+    user.id = founduser["_id"]
     return user
 
 
@@ -83,7 +85,18 @@ def home():
     """
     Route for the home page
     """
-    docs = db.listings.find({}).sort("created_at", -1) # retrieve all listings
+    sort_option = request.args.get('sort')
+
+    if sort_option == 'oldest':
+        docs_cursor = db.items.find({}).sort("created_at", 1)
+    elif sort_option == 'lowest':
+        docs_cursor = db.items.find({}).sort("price", 1)
+    elif sort_option == 'highest':
+        docs_cursor = db.items.find({}).sort("price", -1)
+    else:
+        docs_cursor = db.items.find({}).sort("created_at", -1)
+    
+    docs = list(docs_cursor)
     return render_template("index.html", docs=docs)  # render the hone template
 
 
@@ -150,6 +163,53 @@ def item(item_id):
         return render_template("item.html", founditem = founditem)
     except:
         return redirect(url_for('home')) #redirect to an error page ideally
+
+#add item here
+@app.route("/add")
+def add():
+    #TODO make this an actual userid fetch
+    userid = "user placeholder"
+    return render_template("add.html", userid = userid)
+
+@app.route("/add/<user_id>", methods= ["GET", "POST"])
+def create_item(user_id):
+    name = request.form["itemname"]
+    desc = request.form["description"]
+    price = request.form["price"]
+    url = request.form["url"]
+    item = {"name": name,  "description" :desc, "user":user_id, "image_url":url, "price":price, "created_at": datetime.datetime.utcnow()}
+    db.items.insert_one(item)
+    return redirect(url_for('home'))
+
+#delete has no html but should be invoked later from the my listings page, pass the item id through
+@app.route("/delete/<item_id>")
+def delete(item_id):
+        db.items.delete_one({"_id": ObjectId(item_id)})
+        #TODO can redirect to the my listings page later
+        return redirect(url_for('home'))
+
+@app.route("/edit/<item_id>")
+def edit(item_id):
+    founditem = db.items.find_one({'_id': ObjectId(item_id)})
+    return render_template("edit.html", founditem = founditem, item_id = item_id)
+
+@app.route("/update/<item_id>", methods= ["GET", "POST"])
+def update_item(item_id):
+    name = request.form["itemname"]
+    desc = request.form["description"]
+    price = request.form["price"]
+    url = request.form["url"]
+    item = {"name": name,  "description" :desc, "image_url":url, "price":price}
+    db.items.update_one({"_id": ObjectId(item_id)}, {"$set": item})
+    return redirect(url_for('home'))
+
+
+@app.route("/viewListings")
+def view_listings():
+    user_to_find = flask_login.current_user.id
+    print(user_to_find)
+    items = list(db.items.find({"user": ObjectId(user_to_find)}))
+    return render_template("viewlistings.html", docs = items)
 
 
 @login_manager.unauthorized_handler
