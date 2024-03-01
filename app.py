@@ -183,7 +183,7 @@ def create_item(user_id):
     url = request.form["url"]
     item = {"name": name,  "description" :desc, "user":ObjectId(user_id), "image_url":url, "price": price, "created_at": datetime.datetime.utcnow()}
     db.items.insert_one(item)
-    return redirect(url_for('home'))
+    return redirect(url_for('view_listings'))
 
 #delete has no html but should be invoked later from the my listings page, pass the item id through
 @app.route("/delete/<item_id>")
@@ -191,7 +191,7 @@ def create_item(user_id):
 def delete(item_id):
         db.items.delete_one({"_id": ObjectId(item_id)})
         #TODO can redirect to the my listings page later
-        return redirect(url_for('home'))
+        return redirect(url_for('view_listings'))
 
 @app.route("/edit/<item_id>")
 @flask_login.login_required
@@ -208,7 +208,7 @@ def update_item(item_id):
     url = request.form["url"]
     item = {"name": name,  "description" :desc, "image_url":url, "price": price}
     db.items.update_one({"_id": ObjectId(item_id)}, {"$set": item})
-    return redirect(url_for('home'))
+    return redirect(url_for('view_listings'))
 
 
 @app.route("/viewListings")
