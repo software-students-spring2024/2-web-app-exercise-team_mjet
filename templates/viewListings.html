@@ -5,7 +5,7 @@
     <p>You have no listings ... ☹️</p>
     {% else %}
     {% for doc in docs %}
-    <div class="listing">
+    <div class="listing" onclick="window.location.href='/item/{{ doc._id }}'">
         <div class="listing-image">
             <img
             src="{{ doc.image_url }}"
@@ -15,12 +15,13 @@
         </div>
         <div class="details">
             <div class="details-primary">
-                <a href="{{url_for('item', item_id = doc._id)}}"><b>{{ doc.name }}</b></a>
-            <p>${{ doc.price }}</p>
+                <b>{{ doc.name }}</b>
+                <p>${{ doc.price }}</p>
+            </div>
+            <p>{{ doc.description }}</p>
         </div>
-        <p>{{ doc.description }}</p>
     </div>
-  {% endfor %}
-  {% endif %}
+    {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
