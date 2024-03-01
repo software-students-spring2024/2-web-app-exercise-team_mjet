@@ -16,9 +16,11 @@
         <div class="details">
             <div class="details-primary">
                 <a href="{{url_for('item', item_id = doc._id)}}"><b>{{ doc.name }}</b></a>
-            <p>${{ doc.price }}</p>
-        </div>
+                <p>${{ doc.price }}</p>
+            
+            </div>
         <p>{{ doc.description }}</p>
+        </div>
     </div>
   {% endfor %}
   {% endif %}

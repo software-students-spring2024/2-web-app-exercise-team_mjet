@@ -32,7 +32,9 @@
         but hey, it's pure CSS magic.
         -->
         <ul id="menu">
-          
+          {% if current_user.is_authenticated%}
+          <div>Logged in</div>
+          {% endif %}
           <a href="{{ url_for('home')}}"><li>Home</li><a>
           <a href="{{ url_for('log_in') }}"><li>Login</li></a>
           <a href="{{ url_for('sign_up')}}"><li>Sign Up</li><a>
