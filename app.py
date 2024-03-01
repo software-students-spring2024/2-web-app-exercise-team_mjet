@@ -4,11 +4,8 @@ import os
 import datetime
 from flask import Flask, render_template, request, redirect, url_for
 
-from flask import Flask, render_template
-
 # from markupsafe import escape
 import pymongo
-from bson.objectid import ObjectId
 from dotenv import load_dotenv
 import flask_login #this will be used for user authentication
 from flask_bcrypt import Bcrypt 
