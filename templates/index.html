@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block container %}
+{% extends 'base.html' %}
+
+{% block container %}
 <div id="search-results">
   <div id="results">{{ docs|length }} Results</div>
   <select name="sort" id="sort" onchange="dropdownRedirect()">
@@ -11,7 +13,7 @@
 
 <div id="listings">
   {% for doc in docs %}
-  <div class="listing">
+  <div class="listing" onclick="window.location.href='/item/{{ doc._id }}'">
     <div class="listing-image">
       <img
         src="{{ doc.image_url }}"
@@ -21,12 +23,10 @@
     </div>
     <div class="details">
       <div class="details-primary">
-        <a href="{{url_for('item', item_id = doc._id)}}"
-          ><b>{{ doc.name }}</b></a
-        >
+        <b>{{ doc.name }}</b>
         <p>${{ doc.price }}</p>
       </div>
-      <p>{{ doc.description }}</p>
+    <p>{{ doc.description }}</p>
     </div>
   </div>
   {% endfor %}
