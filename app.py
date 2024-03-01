@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 import flask_login #this will be used for user authentication
 from flask_bcrypt import Bcrypt 
 from flask_login import LoginManager
+from bson.objectid import ObjectId #used to search db using objec ids
 # load credentials and configuration options from .env file
 # if you do not yet have a file named .env, make one based on the template in env.example
 load_dotenv()  # take environment variables from .env.
@@ -59,7 +60,7 @@ def user_loader(username):
         return
 
     user = User()
-    user.id = username
+    user.id = founduser["_id"]
     return user
 
 
@@ -197,6 +198,14 @@ def update_item(item_id):
     item = {"name": name,  "description" :desc, "image_url":url, "price":price}
     db.items.update_one({"_id": ObjectId(item_id)}, {"$set": item})
     return redirect(url_for('home'))
+
+
+@app.route("/viewListings")
+def view_listings():
+    user_to_find = flask_login.current_user.id
+    print(user_to_find)
+    items = list(db.items.find({"user": ObjectId(user_to_find)}))
+    return render_template("viewlistings.html", docs = items)
 
 
 @login_manager.unauthorized_handler

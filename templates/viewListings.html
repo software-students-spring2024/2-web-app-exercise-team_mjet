@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block container %}
+<h1>Your Listings</h1>
+<div id="listings">
+    {% if docs|length ==0%}
+    <p>You have no listings ... ☹️</p>
+    {% else %}
+    {% for doc in docs %}
+    <div class="listing">
+        <div class="listing-image">
+            <img
+            src="{{ doc.image_url }}"
+            alt="{{ doc.title }}"
+            referrerpolicy="no-referrer"
+            />
+        </div>
+        <div class="details">
+            <div class="details-primary">
+                <a href="{{url_for('item', item_id = doc._id)}}"><b>{{ doc.name }}</b></a>
+            <p>${{ doc.price }}</p>
+        </div>
+        <p>{{ doc.description }}</p>
+    </div>
+  {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}
