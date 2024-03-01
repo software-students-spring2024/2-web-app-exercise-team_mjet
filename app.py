@@ -5,8 +5,6 @@ import datetime
 from flask import Flask, render_template, request, redirect, url_for
 
 from flask import Flask, render_template
-from flask_nav import Nav
-from flask_nav.elements import *
 
 # from markupsafe import escape
 import pymongo
