@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 import flask_login #this will be used for user authentication
 from flask_bcrypt import Bcrypt 
 from flask_login import LoginManager
+from bson.decimal128 import Decimal128
 from bson.objectid import ObjectId #used to search db using objec ids
 # load credentials and configuration options from .env file
 # if you do not yet have a file named .env, make one based on the template in env.example
@@ -166,16 +167,20 @@ def item(item_id):
 @app.route("/add")
 def add():
     #TODO make this an actual userid fetch
-    userid = "user placeholder"
-    return render_template("add.html", userid = userid)
+    try:
+        userid = flask_login.current_user.id
+        return render_template("add.html", userid = userid)
+    except:
+        #error handle
+        return redirect(url_for('home'))
 
 @app.route("/add/<user_id>", methods= ["GET", "POST"])
 def create_item(user_id):
     name = request.form["itemname"]
     desc = request.form["description"]
-    price = request.form["price"]
+    price = Decimal128(request.form["price"])
     url = request.form["url"]
-    item = {"name": name,  "description" :desc, "user":user_id, "image_url":url, "price":price, "created_at": datetime.datetime.utcnow()}
+    item = {"name": name,  "description" :desc, "user":ObjectId(user_id), "image_url":url, "price": price, "created_at": datetime.datetime.utcnow()}
     db.items.insert_one(item)
     return redirect(url_for('home'))
 
@@ -195,9 +200,9 @@ def edit(item_id):
 def update_item(item_id):
     name = request.form["itemname"]
     desc = request.form["description"]
-    price = request.form["price"]
+    price = Decimal128(request.form["price"])
     url = request.form["url"]
-    item = {"name": name,  "description" :desc, "image_url":url, "price":price}
+    item = {"name": name,  "description" :desc, "image_url":url, "price": price}
     db.items.update_one({"_id": ObjectId(item_id)}, {"$set": item})
     return redirect(url_for('home'))
 
