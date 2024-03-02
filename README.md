@@ -26,5 +26,6 @@ Our vision for CampusSwap is a marketplace where students can trade items with f
 
 ## Task boards
 
-[Sprint 2] (https://github.com/orgs/software-students-spring2024/projects/27)
-[Sprint 1] (https://github.com/orgs/software-students-spring2024/projects/15)
+[https://github.com/orgs/software-students-spring2024/projects/27] (Sprint 2)
+
+[https://github.com/orgs/software-students-spring2024/projects/15] (Sprint 1)
