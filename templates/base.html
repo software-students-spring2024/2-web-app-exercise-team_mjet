@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head> 
     <title>Campus Swap</title>
     <link
       rel="stylesheet"
@@ -35,13 +35,14 @@
             but hey, it's pure CSS magic.
             -->
             <ul id="menu">
-              {% if current_user.is_authenticated%}
-              <div>Logged in</div>
-              {% endif %}
               <a href="{{ url_for('home')}}"><li>Home</li><a>
-              <a href="{{ url_for('log_in') }}"><li>Login</li></a>
-              <a href="{{ url_for('sign_up')}}"><li>Sign Up</li><a>
-              <a href="{{ url_for('view_listings')}}"><li>View Listings</li></a>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('view_listings')}}"><li>View Listings</li></a>
+                <a href="{{ url_for('logout') }}"><li>Logout</li></a>
+                {% else%}
+                <a href="{{ url_for('log_in') }}"><li>Login</li></a>
+                <a href="{{ url_for('sign_up')}}"><li>Sign Up</li><a>
+                {% endif %}
             </ul>
           </div>
         </nav>
