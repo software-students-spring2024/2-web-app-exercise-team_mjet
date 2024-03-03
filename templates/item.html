@@ -1,17 +1,23 @@
-{% extends 'base.html' %} {% block container %}
+{% extends 'base.html' %} 
+
+{% block container %}
 <div class="item">
   <div class="item-image">
     <img
-      src="{{founditem.image_url}}"
+      src="{{ founditem.image_url }}"
+      alt="{{ founditem.name }}"
       referrerpolicy="no-referrer"
-      alt="no picture"
     />
   </div>
-  <div class="title"><b>{{founditem.name}}</b></div>
-  <div class="price"><b>${{founditem.price}}</b></div>
-  <div class="price"><b>Sold By: {{founditem.user}}</b></div>
-  <div class="description">
-    <p>Description: {{founditem.description}}</p>
+  <div id="item-content">
+    <div id="item-primary">
+      <p>{{ founditem.name }}</p>
+      <p>${{ founditem.price }}</p>
+    </div>
+    <div id="item-details">
+      <p>Description: {{ founditem.description }}</p>
+      <p>Sold By: {{ founditem.user }}</p>
+    </div>
   </div>
 </div>
 {% endblock %}
