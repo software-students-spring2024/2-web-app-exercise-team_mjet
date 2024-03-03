@@ -187,7 +187,6 @@ footer {
   transform: none;
 }
 
-
 #search-results {
   display: flex;
   justify-content: space-between;
@@ -208,12 +207,6 @@ footer {
   border: 1px solid grey;
   border-radius: 0.5em;
 }
-
-
-
-
-
-
 
 #listings {
   margin: 0rem 2rem;
