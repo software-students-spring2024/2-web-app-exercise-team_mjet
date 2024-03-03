@@ -1,17 +1,30 @@
 {% extends 'base.html' %} 
 
 {% block container %}
-<h2>Log in</h2>
-<form method="POST" action="{{ url_for('log_in')}}">
-    <label for="fusername">Username: </label>
-    <input type="text" id="fusername" name="fusername" placeholder="Username"/>
-    <br />
-    <label for="fusername">Password: </label>
-    <input type="text" id="fpassword" name="fpassword" placeholder="Enter a Password"/>
-    <br />
-    <input type="submit" value="Log in" />
+<div id="login-signup">
+    <a href="{{ url_for('log_in') }}" class="active">Log In</a>
+    <a href="{{ url_for('sign_up') }}">Sign Up</a>
+</div>
+
+<form method="POST" action="{{ url_for('log_in')}}" id="login-form">
+    <div id="form-user">
+        <label for="fusername">Username</label><br>
+        <input type="text" id="fusername" name="fusername" placeholder="Username"/>
+    </div>
+    <div id="form-pass">
+        <label for="fusername">Password</label><br>
+        <input type="text" id="fpassword" name="fpassword" placeholder="Enter a Password"/>
+    </div>
+    <div id="form-submit">
+        <input type="submit" value="Log In" />
+    </div>
 </form>
 {% if error %}
 <p>{{error}}</p>
 {% endif %}
+
+<script>
+
+</script>
+
 {% endblock %}
