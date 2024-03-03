@@ -178,7 +178,8 @@ def add():
 @flask_login.login_required
 def create_item(user_id):
     user = db.users.find_one({"_id":ObjectId(user_id)})
-    username = user.username
+    print(user)
+    username = user["username"]
     name = request.form["itemname"]
     desc = request.form["description"]
     price = Decimal128(request.form["price"])
