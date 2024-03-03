@@ -177,11 +177,13 @@ def add():
 @app.route("/add/<user_id>", methods= ["GET", "POST"])
 @flask_login.login_required
 def create_item(user_id):
+    user = db.users.find_one({"_id":ObjectId(user_id)})
+    username = user.username
     name = request.form["itemname"]
     desc = request.form["description"]
     price = Decimal128(request.form["price"])
     url = request.form["url"]
-    item = {"name": name,  "description" :desc, "user":ObjectId(user_id), "image_url":url, "price": price, "created_at": datetime.datetime.utcnow()}
+    item = {"name": name,  "description" :desc, "user":ObjectId(user_id),"username":username, "image_url":url, "price": price, "created_at": datetime.datetime.utcnow()}
     db.items.insert_one(item)
     return redirect(url_for('view_listings'))
 
