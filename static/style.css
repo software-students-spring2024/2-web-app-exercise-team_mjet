@@ -217,6 +217,87 @@ footer {
   overflow: hidden;
 }
 
+/* Alternative listing styling used in 'Your Listings' page */
+.listing-alt {
+  border: 3px solid #56018D;
+  box-sizing: border-box;
+}
+
+.listing-context-alt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 175px;
+  padding: 1rem;
+}
+
+.listing-alt-image {
+  max-width: 100px;
+  overflow: hidden;
+}
+
+.listing-alt img {
+  width: 100px;
+}
+
+.details-alt {
+  padding: 1rem;
+}
+
+.details-primary-alt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 20px;
+  font-weight: bold;
+}
+
+.details-alt > p {
+  height: 38px;
+  overflow: hidden;
+}
+
+#profile {
+  padding: 2rem;
+}
+
+#new-listing {
+  display: flex;
+  background-color: #56018D;
+  height: 40px;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  gap: 0.5rem;
+}
+
+#new-listing input {
+  width: 100%;
+  background-color: #56018D;
+  color:#ededed;
+  display: flex;
+  border: none;
+  font-weight: bold;
+}
+
+.item-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  padding-bottom: 1rem;
+}
+
+.item-buttons a {
+  width: 30%;
+  text-align: center;
+  box-sizing: border-box;
+  background-color: #56018D;
+  color:#ededed;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+}
+
 .item {
   display: flex;
   flex-direction: column;
