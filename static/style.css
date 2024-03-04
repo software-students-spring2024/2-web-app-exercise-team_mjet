@@ -32,12 +32,14 @@ header a {
 
 main {
   border-bottom: 1px solid black;
-  font-size: 12px;
+  font-size: 1rem;
   margin-top: 60px;
 }
 
 footer {
-  margin-bottom: 5px;
+  background-color: #ededed;
+  height: 20vh;
+  padding: 2rem;
 }
 
 #menuToggle {
@@ -107,7 +109,7 @@ footer {
  * But let's hide the middle one.
  */
 #menuToggle input:checked ~ span:nth-child(2) {
-  transform: rotate(45deg) translate(0px, 1px);
+  transform: rotate(45deg) translate(-2px, 0px);
 }
 
 /*
@@ -206,25 +208,25 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 14px;
   height: 20px;
   font-weight: bold;
 }
 
 .details > p {
-  height: 30px;
+  height: 38px;
   overflow: hidden;
 }
 
 .item {
   display: flex;
   flex-direction: column;
-  height: 80vh;
+  min-height: 80vh;
 }
 
 .item-image {
-  border-bottom: 1px solid grey;
+  border-bottom: 2px solid silver;
   box-sizing: border-box;
+  background-color: #ededed;
 }
 
 .item img {
@@ -238,13 +240,13 @@ footer {
   margin: 2rem;
 }
 
+#item-content p {
+  margin: 0.2rem 0;
+}
+
 #item-primary {
  font-size: 1.2rem; 
  font-weight: bold;
-}
-
-#item-details {
-  font-size: 0.8rem;
 }
 
 #login-signup {
