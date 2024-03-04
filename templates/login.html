@@ -9,11 +9,11 @@
 <form method="POST" action="{{ url_for('log_in')}}" id="login-form">
     <div id="form-user">
         <label for="fusername">Username</label><br>
-        <input type="text" id="fusername" name="fusername" placeholder="Username"/>
+        <input type="text" id="fusername" name="fusername" placeholder="Username" required/>
     </div>
     <div id="form-pass">
         <label for="fusername">Password</label><br>
-        <input type="text" id="fpassword" name="fpassword" placeholder="Enter a Password"/>
+        <input type="text" id="fpassword" name="fpassword" placeholder="Enter a Password" required/>
     </div>
     <div id="form-submit">
         <input type="submit" value="Log In" />
