@@ -15,54 +15,25 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: #56018D;
+  color: #ededed;
 }
 
-header,
-main {
-  border-bottom: 1px solid;
-  font-size: 12px;
-}
-
-main {
-  margin-top: 60px;
+header a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.4rem;
+  font-weight: bold;
 }
 
 #nav-offset {
   width: 33px;
 }
 
-header h1 a {
-  text-decoration: none;
-  color: inherit;
-}
-
-section.posts {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-article.post {
-  border: 1px solid black;
-  padding: 1rem;
-}
-
-article.post.new-post {
-  background-color: #f0f0f0;
-}
-
-article.post .controls {
+main {
+  border-bottom: 1px solid black;
   font-size: 12px;
-}
-
-article.post .author {
-  font-size: 12px;
-}
-
-article.post p.message {
-  font-size: 24px;
+  margin-top: 60px;
 }
 
 footer {
@@ -70,10 +41,6 @@ footer {
 }
 
 #menuToggle {
-  display: block;
-  position: relative;
-  top: 0px;
-  left: 0px;
   z-index: 1;
   -webkit-user-select: none;
   user-select: none;
@@ -81,7 +48,7 @@ footer {
 
 #menuToggle a {
   text-decoration: none;
-  color: #232323;
+  color: #56018D;
   transition: color 0.3s ease;
 }
 
@@ -90,12 +57,9 @@ footer {
 }
 
 #menuToggle input {
-  display: block;
-  width: 40px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   position: absolute;
-  top: -7px;
-  left: -5px;
   cursor: pointer;
   opacity: 0;
   /* hide this */
@@ -109,11 +73,10 @@ footer {
  */
 #menuToggle span {
   display: block;
-  width: 33px;
+  width: 30px;
   height: 4px;
-  margin-bottom: 5px;
-  position: relative;
-  background: #cdcdcd;
+  margin: 4px 0px;
+  background: #ededed;
   border-radius: 3px;
   z-index: 1;
   transform-origin: 4px 0px;
@@ -135,22 +98,23 @@ footer {
  */
 #menuToggle input:checked ~ span {
   opacity: 1;
-  transform: rotate(45deg) translate(0px, 0px);
-  background: #232323;
+  transform: rotate(-45deg) translate(0px, 0px);
+  background-color: #56018D;
+  position: relative;
 }
 
 /*
  * But let's hide the middle one.
  */
 #menuToggle input:checked ~ span:nth-child(2) {
-  opacity: 0;
+  transform: rotate(45deg) translate(0px, 1px);
 }
 
 /*
- * Ohyeah and the last one should go the other direction
- */
+* Ohyeah and the last one should go the other direction
+*/
 #menuToggle input:checked ~ span:nth-last-child(3) {
-  transform: rotate(-45deg) translate(-7px, 4px);
+  opacity: 0;
 }
 
 /*
@@ -159,9 +123,10 @@ footer {
  */
 #menu {
   position: absolute;
-  width: 300px;
-  margin: -50px 0 0 -32px;
-  padding: 50px;
+  height: 100vh;
+  width: 70%;
+  margin: -45px 0 0 -32px;
+  padding: 24px;
   padding-top: 125px;
   background: #ededed;
   list-style-type: none;
@@ -175,9 +140,7 @@ footer {
 
 #menu li {
   padding: 10px 0;
-  /*10 default*/
   font-size: 22px;
-  /*22 default*/
 }
 
 /*
@@ -195,7 +158,7 @@ footer {
 }
 
 #results {
-  font-size: 1.4em;
+  font-size: 1.1rem;
   font-weight: bold;
 }
 
@@ -204,57 +167,54 @@ footer {
   height: 1.75rem;
   text-align: center;
   background-color: white;
-  border: 1px solid grey;
+  border: 2px solid #56018D;
   border-radius: 0.5em;
 }
 
 #listings {
-  margin: 0rem 2rem;
+  margin: 0rem 2rem 1rem 2rem;
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 1rem;
 }
 
 .listing {
-  border: 1px solid black;
-  position: relative;
-  max-height: 500px;
+  height: 350px;
+  border: 3px solid #56018D;
   box-sizing: border-box;
-  border-radius: 0.5em;
+  border-radius: 1rem;
+  overflow: hidden;
 }
 
 .listing-image {
-  position: relative;
-  height: 70%;
+  height: 250px;
   overflow: hidden;
 }
 
 .listing img {
   width: 100%;
   height: auto;
-  border-radius: 0.5em;
 }
 
 .details {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 85%;
-  margin: 0 7.5%;
-  height: 30%;
-  /*font-size: 0.7rem;*/
-}
-
-.details p {
-  width: auto;
+  height: 100px;
+  padding: 1rem;
+  background-color: #ededed;
 }
 
 .details-primary {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 14px;
+  height: 20px;
+  font-weight: bold;
 }
 
+.details > p {
+  height: 30px;
+  overflow: hidden;
+}
 
 .item {
   display: flex;
