@@ -1,53 +1,55 @@
-{% extends 'base.html' %} {% block container %}
-<h1>Your Listings</h1>
+{% extends 'base.html' %} 
+
+{% block container %}
+
+<div id="profile">
+  <img 
+    src="{{ url_for('static', filename='user.png') }}" 
+    alt="user profile image" 
+    width="100px"
+    height="100px"
+  />
+</div>
+
+
 <div id="listings">
   {% if docs|length ==0%}
-  <div class="listing" onclick="window.location.href='/add'">
-    <div class="listing-image">
-      <img
-        src="https://cdn-icons-png.freepik.com/512/8333/8333955.png"
-        alt="Add Item"
-        referrerpolicy="no-referrer"
-      />
-    </div>
-    <div class="details">
-      <div class="details-primary">
-        <b>Add Item</b>
-      </div>
-      <p>Add An Item</p>
-    </div>
+  <div id="new-listing" onclick="window.location.href='/add'">
+    <img
+      src="https://cdn-icons-png.freepik.com/512/8333/8333955.png"
+      alt="Add Item"
+      width="30px"
+      height="30px"
+    />
+    <input type="submit" value="NEW LISTING" />
   </div>
   {% else %}
-  <div class="listing" onclick="window.location.href='/add'">
-    <div class="listing-image">
-      <img
-        src="https://cdn-icons-png.freepik.com/512/8333/8333955.png"
-        alt="Add Item"
-        referrerpolicy="no-referrer"
-      />
-    </div>
-    <div class="details">
-      <div class="details-primary">
-        <b>Add Item</b>
-      </div>
-      <p>Add An Item</p>
-    </div>
+  <div id="new-listing" onclick="window.location.href='/add'">
+    <img
+      src="https://cdn-icons-png.freepik.com/512/8333/8333955.png"
+      alt="Add Item"
+      width="30px"
+      height="30px"
+    />
+    <input type="submit" value="NEW LISTING" />
   </div>
   {% for doc in docs %}
-  <div class="listing" onclick="window.location.href='/item/{{ doc._id }}'">
-    <div class="listing-image">
-      <img
-        src="{{ doc.image_url }}"
-        alt="{{ doc.title }}"
-        referrerpolicy="no-referrer"
-      />
-    </div>
-    <div class="details">
-      <div class="details-primary">
-        <b>{{ doc.name }}</b>
-        <p>${{ doc.price }}</p>
+  <div class="listing-alt" onclick="window.location.href='/item/{{ doc._id }}'">
+    <div class="listing-context-alt">
+      <div class="listing-image-alt">
+        <img
+          src="{{ doc.image_url }}"
+          alt="{{ doc.title }}"
+          referrerpolicy="no-referrer"
+        />
       </div>
-      <p>{{ doc.description }}</p>
+      <div class="details-alt">
+        <div class="details-primary-alt">
+          <b>{{ doc.name }}</b>
+          <p>${{ doc.price }}</p>
+        </div>
+        <p>{{ doc.description }}</p>
+      </div>
     </div>
     <div class="item-buttons">
       <a href="{{url_for('edit', item_id = doc._id)}}">Edit</a>
